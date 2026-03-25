@@ -31,3 +31,18 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Arquivos do Front-end (React/Vite) ###
+bot-frontend/node_modules/
+bot-frontend/dist/
+bot-frontend/dist-ssr/
+bot-frontend/*.local
+
+### Segurança e Variáveis de Ambiente ###
+.env
+.env.*
+!.env.example
+
+### Arquivos de Sistema Operacional ###
+.DS_Store
+Thumbs.db
