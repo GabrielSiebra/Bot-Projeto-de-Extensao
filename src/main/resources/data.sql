@@ -14,3 +14,7 @@ VALUES ('1-2025135788', 'Teste de Software', 'Sala 204', 'Prof. Labubu', '19:00:
 --Rebeca Martins Lima
 INSERT INTO aula (matricula, disciplina, sala, professor, horario_inicio, horario_fim, tem_aula) 
 VALUES ('1-2025200570', 'Sistemas Operacionais', 'Laboratório de Informática 1', 'Prof. Havel', '19:00:00.00', '21:30:00.00', true);
+--Eric Oliveira de Araújo
+INSERT INTO aula (matricula, disciplina, sala, professor, horario_inicio, horario_fim, tem_aula) 
+VALUES ('1-2025200355', 'Sistemas Operacionais', 'Laboratório de Informática 1', 'Prof. Havel', '19:00:00.00', '21:30:00.00', true);
+
