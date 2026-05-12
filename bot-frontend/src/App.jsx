@@ -7,6 +7,7 @@ function App() {
   const [studentId, setStudentId] = useState('');
   const [result, setResult] = useState(null);
   const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // Novo estado para a mensagem dinâmica
   const [isBotTyping, setIsBotTyping] = useState(false);
 
   const toggleChat = () => {
@@ -16,6 +17,7 @@ function App() {
       setResult(null);
       setStudentId('');
       setHasError(false);
+      setErrorMessage('');
     }
   };
 
@@ -26,12 +28,20 @@ function App() {
     setIsBotTyping(true);
     setResult(null);
     setHasError(false);
+    setErrorMessage('');
 
     try {
       const response = await fetch(`http://localhost:8080/api/bot/consulta/${studentId}`);
       
+      // Verifica se a resposta não foi OK (ex: Erro 400 ou 500)
       if (!response.ok) {
-        throw new Error('Server error');
+        if (response.status === 400) {
+          // Lança um erro específico para o formato da matrícula
+          throw new Error("Formato inválido! Lembre-se de colocar o '1-' no começo da matrícula.");
+        } else {
+          // Lança o erro genérico para outros problemas
+          throw new Error("Desculpe, não consegui conectar ao sistema. Tente novamente mais tarde.");
+        }
       }
 
       const data = await response.json();
@@ -45,6 +55,7 @@ function App() {
       console.error("Error fetching data:", error);
       setTimeout(() => {
         setHasError(true);
+        setErrorMessage(error.message); // Salva a mensagem que configuramos no bloco acima
         setIsBotTyping(false);
       }, 1000);
     }
@@ -53,6 +64,8 @@ function App() {
   const resetSearch = () => {
     setResult(null);
     setStudentId('');
+    setHasError(false);
+    setErrorMessage('');
   };
 
   return (
@@ -77,10 +90,10 @@ function App() {
               </div>
             )}
 
-            {/* Mensagem de Erro */}
+            {/* Mensagem de Erro Dinâmica */}
             {hasError && (
               <div className="chat-message error-message">
-                Desculpe, não consegui conectar ao sistema. Tente novamente mais tarde.
+                {errorMessage}
               </div>
             )}
 
